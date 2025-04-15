@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile | Frank Fact Generator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <nav id="menu" class="hidden">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Your Facts</h1>
+
+    <section>
+      <h2>Recent Facts</h2>
+      <ul id="recentList" class="fact-list"></ul>
+    </section>
+
+    <section>
+      <h2>Favorites</h2>
+      <ul id="favoriteList" class="fact-list"></ul>
+    </section>
+  </main>
+
+  <div class="bottom-buttons">
+    <div class="test-button" onclick="location.href='./index.html'">
+      <img src="home-icon.png" alt="Home Icon">
+      Home
+    </div>
+    <div class="test-button" onclick="location.href='./profile.html'">
+      <img src="profile-icon.png" alt="Profile Icon">
+      Profile
+    </div>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('menu').classList.toggle('hidden');
+    }
+
+    function loadFacts() {
+      const recent = JSON.parse(localStorage.getItem("recentFalsehoods") || "[]");
+      const favorites = JSON.parse(localStorage.getItem("favoriteFalsehoods") || "[]");
+
+      const recentList = document.getElementById("recentList");
+      const favoriteList = document.getElementById("favoriteList");
+
+      // Recent
+      recentList.innerHTML = "";
+      recent.forEach(fact => {
+        const li = document.createElement("li");
+        li.textContent = fact;
+
+        const star = document.createElement("span");
+        star.innerHTML = "★";
+        star.className = "star";
+        if (favorites.includes(fact)) star.classList.add("favorited");
+
+        star.onclick = () => {
+          if (!favorites.includes(fact)) {
+            favorites.unshift(fact);
+          } else {
+            const index = favorites.indexOf(fact);
+            if (index > -1) favorites.splice(index, 1);
+          }
+          localStorage.setItem("favoriteFalsehoods", JSON.stringify(favorites));
+          loadFacts();
+        };
+
+        li.appendChild(star);
+        recentList.appendChild(li);
+      });
+
+      // Favorites
+      favoriteList.innerHTML = "";
+      favorites.forEach(fact => {
+        const li = document.createElement("li");
+        li.textContent = fact;
+        favoriteList.appendChild(li);
+      });
+    }
+
+    window.onload = loadFacts;
+  </script>
+</body>
+</html>

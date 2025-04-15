@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Frank Fact Generator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <nav id="menu" class="hidden">
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Frank Fact Generator</h1>
+    <input type="text" id="topicInput" placeholder="Enter a topic" />
+    <button onclick="generateFact()">Generate Fact</button>
+    <p id="factDisplay"></p>
+  </main>
+
+  <script src="script.js"></script>
+<div class="bottom-buttons">
+  <div class="test-button" onclick="location.href='./index.html'">
+    <img src="home-icon.png" alt="Home Icon">
+    Home
+  </div>
+  <div class="test-button" onclick="location.href='./profile.html'">
+    <img src="profile-icon.png" alt="Profile Icon">
+    Profile
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About | Frank Fact Generator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <nav id="menu" class="hidden">
+      <a href="index.html">Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>About Frank Fact Generator</h1>
+
+    <section>
+      <h2>Our Story</h2>
+      <p>Our founder and sole developer, Henri, believes that lying isn’t always wrong. In fact, he thinks it can be fun. He believes that convincing people that a lie is true is morally neutral, as long as the lie is lighthearted and the person telling it comes clean.</p>
+      <video controls width="100%" style="max-width: 600px; border-radius: 12px; margin-top: 20px;">
+        <source src="your-video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </section>
+
+    <section>
+      <h2>Explore Our Features</h2>
+      <ul>
+        <li><strong>Fact Generation:</strong> Leave the topic blank and click “Generate Fact” for a random lie.</li>
+        <li><strong>Fact About:</strong> Enter a topic and click “Generate Fact” to get a lie tailored to it.</li>
+        <li><strong>Fact Saving:</strong> Save and star your favorite lies in your profile (coming back soon).</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Why Choose Us?</h2>
+      <p>This is the only app that helps you generate convincing, ridiculous lies just for fun. Whether you're trying to make your friends laugh, practice persuasion, or just need a new icebreaker, Frank Fact Generator has you covered.</p>
+    </section>
+
+    <section>
+      <h2>Testimonials</h2>
+      <blockquote>“I would use it (this app) for a really long time. Probably on different friend groups and family.” — Aaron Dorner</blockquote>
+      <blockquote>“I definitely could see myself downloading it off a pop-up ad and using it once or twice a week.” — Kiyah Burns</blockquote>
+      <blockquote>“Everyone does this with their friends, right? Just toss out a random lie. I do it all the time.” — Jacob Saucedo</blockquote>
+      <blockquote>“I feel like your app would be very helpful for writing sermons.” — Rev. Tom Hathaway</blockquote>
+    </section>
+
+    <section>
+      <h2>Our Brand</h2>
+      <p>We acknowledge that lying can be harmful — which is why our facts are designed to be lighthearted, silly, and non-offensive. This project is about play, not harm. Everything is built with emotional intelligence and a commitment to fun, inclusive humor.</p>
+    </section>
+  </main>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('menu').classList.toggle('hidden');
+    }
+  </script>
+<div class="bottom-buttons">
+  <div class="test-button" onclick="location.href='./index.html'">
+    <img src="home-icon.png" alt="Home Icon">
+    Home
+  </div>
+  <div class="test-button" onclick="location.href='./profile.html'">
+    <img src="profile-icon.png" alt="Profile Icon">
+    Profile
+  </div>
+</div>
+</body>
+</html>
