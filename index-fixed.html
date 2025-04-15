@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fun Fact Generator</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #e0e0e0;
+      font-family: 'San Francisco', 'Roboto', sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background-color: #1c1c1c;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      padding: 30px;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #007aff;
+    }
+
+    input[type="text"] {
+      width: 80%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 2px solid #007aff;
+      border-radius: 8px;
+      background-color: #1c1c1c;
+      color: #e0e0e0;
+      font-size: 1.2em;
+    }
+
+    .fact-box {
+      border: 2px solid #007aff;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      background-color: #1c1c1c;
+      color: #e0e0e0;
+      font-size: 1.2em;
+      opacity: 0;
+      transition: opacity 0.6s ease-in;
+    }
+
+    .button {
+      background-color: #007aff;
+      color: #1c1c1c;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.2em;
+      transition: background-color 0.3s;
+    }
+
+    .button:hover {
+      background-color: #0066cc;
+    }
+
+    #profilePage {
+      display: none;
+      text-align: left;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .star {
+      cursor: pointer;
+      font-size: 1.5em;
+      color: gray;
+      margin-left: 10px;
+    }
+
+    .star.favorited {
+      color: gold;
+    }
+
+    #recentLies li, #favoriteLies li {
+      margin: 10px 0;
+      font-size: 1.1em;
+    }
+
+    .bottom-buttons {
+      position: fixed;
+      bottom: 20px;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      padding: 0 20px;
+    }
+
+    .test-button {
+      display: inline-block;
+      padding: 12px;
+      background-color: #007aff;
+      border-radius: 8px;
+      text-align: center;
+      cursor: pointer;
+      color: #1c1c1c;
+      font-weight: bold;
+      font-size: 1em;
+    }
+
+    .test-button img {
+      width: 40px;
+      height: 40px;
+      display: block;
+      margin: 0 auto 5px;
+    }
+
+    /* New Business Showcase Sections */
+    .section {
+      padding: 60px 20px;
+      max-width: 900px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #007aff;
+    }
+
+    .section p {
+      font-size: 1.1em;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .screenshots {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .screenshots img {
+      width: 200px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .cta-button {
+      background-color: #007aff;
+      color: #fff;
+      padding: 14px 28px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: #005fcc;
+    }
+
+    .testimonial {
+      background-color: #1c1c1c;
+      padding: 20px;
+      margin: 20px auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+      max-width: 700px;
+    }
+.top-logo {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  z-index: 999;
+}
+
+.top-logo img {
+  width: 50px;
+  height: auto;
+}
+.bottom-logo {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.bottom-logo img {
+  width: 80px;
+  height: auto;
+  opacity: 0.85;
+}
+  </style>
+</head>
+<body>
+  <div class="top-logo">
+    <img src="logo-icon.png" alt="Logo">
+  </div>
+  <!-- Main Fun Fact Generator -->
+  <div class="container" id="mainPage">
+    <h1>FACT ABOUT:</h1>
+    <input type="text" id="topic" placeholder="Enter a topic" />
+    <div class="fact-box" id="fact-box"></div>
+    <button class="button" onclick="generateFact()">GENERATE 'FACT'</button>
+  </div>
+
+  <!-- Profile Page -->
+  <div id="profilePage">
+    <h2>Recent Lies</h2>
+    <ul id="recentLies"></ul>
+    <h2 style="color: #ffc107;">Favorites</h2>
+    <ul id="favoriteLies"></ul>
+  </div>
+
+  <!-- Bottom Navigation Buttons -->
+  <div class="bottom-buttons">
+    <div class="test-button" id="homeBtn">
+      <img src="home-icon.png" alt="Home Icon" onerror="this.src='fallback.png';">
+      Home
+    </div>
+    <div class="test-button" id="profileBtn">
+      <img src="profile-icon.png" alt="Profile Icon" onerror="this.src='fallback.png';">
+      Profile
+    </div>
+  </div>
+
+  <!-- Business Showcase Sections -->
+  <section id="compelling-story" class="section">
+    <h2>Our Story</h2>
+    <p>Our founder and sole developer, Henri, believes that lying isn’t always wrong. In fact, he thinks it can be fun. He believes that convincing people that a lie is true is morally neutral, as long as the lie is lighthearted and the person telling it comes clean.</p>
+    <video controls width="100%" style="max-width: 800px; margin-top: 20px;">
+      <source src="your-video.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </section>
+
+  <section id="visual-components" class="section">
+    <h2>Explore Our Features</h2>
+    <h2>Fact Generation</h2>
+    <p> Simply leave the topic blank on the homepage and press “Generate Fact” to obtain a random fact.</p>
+    <h2>Fact About</h2>
+    <p>Input any topic on the homepage and press “Generate Fact” to find a specific fact.</p>
+    <h2>Fact Saving</h2>
+    <p>If you have a favorite fact, navigate to your profile. You’ll find your past facts and stars next to them. Mark a favorite fact by pressing the star icon.</p>
+  </section>
+
+  <section id="value-prop" class="section">
+    <h2>Why Choose Us?</h2>
+    <p>We’re not sure how many apps there are, but we know there are many. However, do you know how many apps generate untrue fun facts while helping users improve their speaking, persuading, and debating skills in a fun and comfortable setting? Just one: ours. So if you enjoy presenting lies as fun facts but don’t want to fabricate them from scratch, choose us. Additionally, our app relieves the pain of not having a lie to tell, not having the time to craft a lie worth telling, or the pain of having writer’s block.</p>
+  </section>
+
+  <section id="cta" class="section">
+    <h2>Ready to Try?</h2>
+	 <p>Start Lying Today</p> 
+  </section>
+
+  <section id="testimonials" class="section">
+    <h2>What People Are Saying</h2>
+    <div class="testimonial">
+      <p>“I would use it (this app) for a really long time I would  probably use it on, different friend groups and, family”</p>
+      <span> -Aaron Dorner.  </span>
+    </div>
+    <div class="testimonial">
+      <p>“I definitely could see myself downloading it just off of a pop up ad and using it once a week, two times a week.”</p>
+      <span> -Kiyah Burns. </span>
+    </div>
+    <div class="testimonial">
+      <p>“Everyone does with their friends, you know, Yeah? Kind of just toss out a random lie, yeah, I do it all the time.“</p>
+      <span> -Jacob Saucedo. </span>
+    </div>
+<div class="testimonial">
+      <p>“I feel like your app would be very helpful for writing sermons”</p>
+      <span> -Rev. Tom Hathaway. </span>
+    </div>
+  </section>
+
+  <section id="brand-identity" class="section">
+    <h2>Our Brand</h2>
+    <p>We acknowledge that lying can be detrimental, which is why all generations are inherently lighthearted. We hold a deep value for and strive to respect all emotions, lived experiences, and individuals. Our content is meticulously crafted to avoid offending or disrespecting anyone. We have implemented measures to ensure that our website serves as a platform for creating enjoyable moments with friends and nothing more. </p>
+  </section>
+<div class="bottom-logo">
+  <img src="logo-icon.png" alt="Logo">
+</div>
+
+  <!-- JavaScript Logic -->
+  <script>
+    let allFalsehoods = [];
+    let recentFalsehoods = [];
+    let favoriteFalsehoods = [];
+
+    async function fetchFalsehoods() {
+      const response = await fetch('falsehoods2.0.txt');
+      const text = await response.text();
+      allFalsehoods = [...new Set(text.split('\n').map(l => l.trim()).filter(Boolean))];
+    }
+
+    async function generateFact() {
+      if (allFalsehoods.length === 0) await fetchFalsehoods();
+
+      const topic = document.getElementById("topic").value.trim();
+      const factBox = document.getElementById("fact-box");
+      let selectedLine = "";
+
+      if (topic) {
+        const pool = allFalsehoods.filter(l => l.includes("[TOPIC]"));
+        selectedLine = pool.length
+          ? pool[Math.floor(Math.random() * pool.length)].replace(/\[TOPIC\]/gi, topic)
+          : `No falsehoods found for topic: ${topic}`;
+      } else {
+        const pool = allFalsehoods.filter(l => !l.includes("[TOPIC]"));
+        selectedLine = pool[Math.floor(Math.random() * pool.length)];
+      }
+
+      factBox.style.opacity = 0;
+      setTimeout(() => {
+        factBox.innerHTML = selectedLine;
+        factBox.style.opacity = 1;
+      }, 200);
+
+      if (!recentFalsehoods.includes(selectedLine)) {
+        recentFalsehoods.unshift(selectedLine);
+        if (recentFalsehoods.length > 50) recentFalsehoods.pop();
+      }
+    }
+
+    function updateProfilePage() {
+      const recentList = document.getElementById("recentLies");
+      const favList = document.getElementById("favoriteLies");
+      recentList.innerHTML = '';
+      favList.innerHTML = '';
+
+      recentFalsehoods.slice(0, 20).forEach(lie => {
+        const li = document.createElement("li");
+        li.textContent = lie;
+
+        const star = document.createElement("span");
+        star.innerHTML = "★";
+        star.classList.add("star");
+        if (favoriteFalsehoods.includes(lie)) star.classList.add("favorited");
+
+        star.onclick = () => {
+          if (!favoriteFalsehoods.includes(lie)) {
+            favoriteFalsehoods.unshift(lie);
+            updateProfilePage();
+          }
+        };
+
+        li.appendChild(star);
+        recentList.appendChild(li);
+      });
+
+      favoriteFalsehoods.slice(0, 20).forEach(lie => {
+        const li = document.createElement("li");
+        li.textContent = lie;
+        document.getElementById("favoriteLies").appendChild(li);
+      });
+    }
+
+    window.onload = () => {
+      document.getElementById("profileBtn").addEventListener("click", () => {
+        document.getElementById("mainPage").style.display = "none";
+        document.getElementById("profilePage").style.display = "block";
+        updateProfilePage();
+      });
+
+      document.getElementById("homeBtn").addEventListener("click", () => {
+        document.getElementById("mainPage").style.display = "block";
+        document.getElementById("profilePage").style.display = "none";
+      });
+
+      document.getElementById("topic").addEventListener("keypress", (e) => {
+        if (e.key === "Enter") generateFact();
+      });
+
+      fetchFalsehoods();
+    };
+  </script>
+</body>
+</html>
