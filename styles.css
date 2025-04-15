@@ -17,7 +17,16 @@ body {
   justify-content: space-around;
   padding: 0 20px;
 }
+.bottom-logo {
+  text-align: center;
+  margin-top: 60px;
+}
 
+.bottom-logo img {
+  width: 80px;
+  height: auto;
+  opacity: 0.9;
+}
 .test-button {
   display: inline-block;
   padding: 12px;
